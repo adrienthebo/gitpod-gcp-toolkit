@@ -9,8 +9,11 @@ RUN apt-get update -q \
     && pip3 install -y crcmod \
     && pip3 install --no-cache-dir -U crcmod
 
-RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-${CLOUDSDK_VERSION}-linux-x86_64.tar.gz \
+RUN \
+    TMPDIR="$(mktemp -d)" \
+    && curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-${CLOUDSDK_VERSION}-linux-x86_64.tar.gz \
     && tar -xf google-cloud-cli-${CLOUDSDK_VERSION}-linux-x86.tar.gz \
     && ./google-cloud-sdk/install.sh \
-    && rm -f google-cloud-cli-${CLOUDSDK_VERSION}-linux-x86.tar.gz
+    ; cd - \
+    ; rm -rf $TMPDIR
 
