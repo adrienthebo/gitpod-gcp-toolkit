@@ -14,6 +14,9 @@ RUN \
     && curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-${CLOUDSDK_VERSION}-linux-x86_64.tar.gz \
     && tar -xf google-cloud-cli-${CLOUDSDK_VERSION}-linux-x86.tar.gz \
     && ./google-cloud-sdk/install.sh \
-    ; cd - \
-    ; rm -rf $TMPDIR
+    && cd - \
+    && rm -rf $TMPDIR
 
+RUN \
+    gcloud components install kubectl \
+    && gcloud components install gke-gcloud-auth-plugin
